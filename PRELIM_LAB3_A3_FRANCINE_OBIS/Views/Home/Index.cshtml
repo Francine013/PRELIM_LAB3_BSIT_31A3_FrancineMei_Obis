@@ -1,20 +1,104 @@
-﻿@{
+﻿@using PRELIM_LAB3_A3_FRANCINE_OBIS.Models
+@{
     ViewData["Title"] = "Customer Information";
- //   List <customer> customer = new List<customer>();
+    var CustomerList = ViewBag.CustomerList as List<customer>;
 }
+<h1 style="font-family: Cambria; color: midnightblue; text-align:center"> <strong>CUSTOMER INFORMATION </strong></h1>
+</div>
 
-<div class="text-center">
-    <h1 class="header">
-        <strong>CUSTOMER INFORMATION</strong></h1>
+<div class="table-container">
+    <table class="customer-table">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Full Name</th>
+                <th>Age</th>
+                <th>Customer ID</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in CustomerList)
+            {
+                if (customer is VIPCustomer vip)
+                {
+                    <tr class="vip-row">
+                        <td><span class="badge vip">VIP</span></td>
+                        <td>@vip.GetFullName()</td>
+                        <td>@vip.GetAge()</td>
+                        <td>@vip.CustomerId</td>
+
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td><span class="badge regular">Regular</span></td>
+                        <td>@customer.GetFullName()</td>
+                        <td>@customer.GetAge()</td>
+                        <td>@customer.CustomerId</td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
 </div>
 
 <style>
     body {
-        background-color: #fff5f7;
+        background-color: peachpuff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .header{
-        font-family: Cambria, italic;
-        font-size: 52;
-        color:midnightblue;
+
+    .table-container {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
     }
+
+    .customer-table {
+        width: 80%;
+        border-collapse: collapse;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+        .customer-table thead {
+            background-color: #f6e6ff;
+        }
+
+        .customer-table th, .customer-table td {
+            padding: 14px 20px;
+            text-align: center;
+        }
+
+        .customer-table tbody tr:nth-child(even) {
+            background-color: #fef6ff;
+        }
+
+        .customer-table tbody tr:nth-child(odd) {
+            background-color: #fdf0f5;
+        }
+
+    .vip-row {
+        background-color: #ffe8f1 !important;
+    }
+
+    .badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+        .badge.vip {
+            background-color: #ffb6c1;
+            color: #800000;
+        }
+
+        .badge.regular {
+            background-color: #bde0fe;
+            color: #005f73;
+        }
 </style>
